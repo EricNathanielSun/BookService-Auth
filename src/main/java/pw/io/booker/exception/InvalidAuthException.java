@@ -1,6 +1,6 @@
 package pw.io.booker.exception;
 
-public class InvalidAuthException extends Exception{
+public class InvalidAuthException extends RuntimeException{
 
 	private final String message;
 	

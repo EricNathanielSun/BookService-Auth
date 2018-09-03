@@ -1,13 +1,13 @@
 package pw.io.booker.exception;
 
-public class InvalidUsernameOrPasswordException extends Exception{
+public class InvalidUsernameOrPasswordException extends RuntimeException{
 
-	private final String message = "Invalid Username Or Password";
+	private final String userFriendlyMessage = "Invalid Username Or Password";
 	
 	@Override
 	public String getMessage()
 	{
-		return message;
+		return userFriendlyMessage;
 	}
 	
 }
