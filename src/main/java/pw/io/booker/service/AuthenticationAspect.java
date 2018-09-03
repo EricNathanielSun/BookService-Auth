@@ -3,7 +3,6 @@ package pw.io.booker.service;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.stereotype.Service;
 
 import pw.io.booker.exception.InvalidAuthException;
 import pw.io.booker.model.Authentication;
