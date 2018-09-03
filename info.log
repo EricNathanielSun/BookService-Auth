@@ -1,0 +1,4 @@
+ INFO pw.io.booker.service.AuthenticationAspect 03 Sep 2018 16:39:34. - Method started: findByToken
+ INFO pw.io.booker.service.AuthenticationAspect 03 Sep 2018 16:39:34. - Method ended: findByToken
+ INFO pw.io.booker.service.AuthenticationAspect 03 Sep 2018 16:39:37. - Method started: findByToken
+ INFO pw.io.booker.service.AuthenticationAspect 03 Sep 2018 16:39:37. - Method ended: findByToken
