@@ -1,4 +1,4 @@
-package pw.io.booker.util;
+package pw.io.booker.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;

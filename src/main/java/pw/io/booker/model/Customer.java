@@ -26,6 +26,7 @@ public class Customer {
 	private String password;
 	
 	@OneToOne(mappedBy="customer")
+	@JsonIgnore
 	private Authentication authentication;
 
 	@JsonIgnore

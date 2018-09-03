@@ -23,4 +23,29 @@ public class CustomerService {
 	{
 		return customerRepository.findById(id).get();
 	}
+	
+	public Customer findByUsername(String userName)
+	{
+		return customerRepository.findByUsername(userName);
+	}
+	
+	public Customer save(Customer customer)
+	{
+		return customerRepository.save(customer);
+	}
+	
+	public List<Customer> saveAll(List<Customer> customers)
+	{
+		return (List<Customer>) customerRepository.saveAll(customers);
+	}
+	
+	public void delete(Customer customer)
+	{
+		customerRepository.delete(customer);
+	}
+	
+	public void deleteAll(List<Customer> customers)
+	{
+		customerRepository.deleteAll(customers);
+	}
 }

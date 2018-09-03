@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,17 +28,17 @@ public class TravelPackageController {
 	}
 
 	@GetMapping
-	public List<TravelPackage> getAll() {
+	public List<TravelPackage> getAll(@RequestHeader("token") String token) {
 		return (List<TravelPackage>) travelPackageRepository.findAll();
 	}
 
 	@PostMapping
-	public List<TravelPackage> saveAll(@RequestBody List<TravelPackage> travelPackages) {
+	public List<TravelPackage> saveAll(@RequestHeader("token") String token, @RequestBody List<TravelPackage> travelPackages) {
 		return (List<TravelPackage>) travelPackageRepository.saveAll(travelPackages);
 	}
 
 	@PutMapping
-	public List<TravelPackage> updateAll(@RequestBody List<TravelPackage> travelPackages) {
+	public List<TravelPackage> updateAll(@RequestHeader("token") String token, @RequestBody List<TravelPackage> travelPackages) {
 		for (TravelPackage travelPackage : travelPackages) {
 			if (!travelPackageRepository.findById(travelPackage.getTravelPackageId()).isPresent()) {
 				throw new RuntimeException("Travel Package should exist first");
@@ -47,7 +48,7 @@ public class TravelPackageController {
 	}
 
 	@DeleteMapping
-	public List<TravelPackage> deleteAll(@RequestParam("travelPackageIdList") List<Integer> travelPackageIdList) {
+	public List<TravelPackage> deleteAll(@RequestHeader("token") String token, @RequestParam("travelPackageIdList") List<Integer> travelPackageIdList) {
 		List<TravelPackage> travelPackageList = (List<TravelPackage>) travelPackageRepository
 				.findAllById(travelPackageIdList);
 		travelPackageRepository.deleteAll(travelPackageList);
@@ -55,12 +56,12 @@ public class TravelPackageController {
 	}
 
 	@GetMapping("/{travelPackageId}")
-	public TravelPackage getTravelPackage(@PathVariable("travelPackageId") int travelPackageId) {
+	public TravelPackage getTravelPackage(@RequestHeader("token") String token, @PathVariable("travelPackageId") int travelPackageId) {
 		return travelPackageRepository.findById(travelPackageId).get();
 	}
 
 	@PutMapping("/{travelPackageId}")
-	public TravelPackage updateTravelPackage(@PathVariable("travelPackageId") int travelPackageId,
+	public TravelPackage updateTravelPackage(@RequestHeader("token") String token, @PathVariable("travelPackageId") int travelPackageId,
 			@RequestBody TravelPackage travelPackage) {
 		if (travelPackageId != travelPackage.getTravelPackageId()) {
 			throw new RuntimeException("Id is not the same with the object id");
@@ -73,7 +74,7 @@ public class TravelPackageController {
 	}
 
 	@DeleteMapping("/{travelPackageId}")
-	public TravelPackage deleteTravelPackage(@PathVariable("travelPackageId") int travelPackageId) {
+	public TravelPackage deleteTravelPackage(@RequestHeader("token") String token, @PathVariable("travelPackageId") int travelPackageId) {
 		TravelPackage travelPackage = travelPackageRepository.findById(travelPackageId).get();
 		travelPackageRepository.delete(travelPackage);
 		return travelPackage;

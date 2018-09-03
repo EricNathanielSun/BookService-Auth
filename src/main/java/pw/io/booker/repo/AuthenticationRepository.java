@@ -1,5 +1,7 @@
 package pw.io.booker.repo;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +12,6 @@ import pw.io.booker.model.Customer;
 public interface AuthenticationRepository extends CrudRepository<Authentication, Integer>{
 	
 	public Authentication findByToken(String token);
-	public Authentication findByCustomer(Customer customer);
+	public List<Authentication> findByCustomer(Customer customer);
 	
 }

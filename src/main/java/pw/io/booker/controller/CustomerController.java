@@ -1,6 +1,7 @@
 package pw.io.booker.controller;
 
 import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,9 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import pw.io.booker.model.Customer;
 import pw.io.booker.repo.CustomerRepository;
 
@@ -27,7 +30,7 @@ public class CustomerController {
 	}
 
 	@GetMapping
-	public List<Customer> getAll() {
+	public List<Customer> getAll(@RequestHeader("token") String token) {
 		return (List<Customer>) customerRepository.findAll();
 	}
 
@@ -42,7 +45,7 @@ public class CustomerController {
 	}
 
 	@PutMapping
-	public List<Customer> updateAll(@RequestBody List<Customer> customers) {
+	public List<Customer> updateAll(@RequestHeader("token") String token, @RequestBody List<Customer> customers) {
 		for (Customer customer : customers) {
 			if (!customerRepository.findById(customer.getCustomerId()).isPresent()) {
 				throw new RuntimeException("Customers should exist first");
@@ -52,19 +55,19 @@ public class CustomerController {
 	}
 
 	@DeleteMapping
-	public List<Customer> deleteAll(@RequestParam("customerIdList") List<Integer> customerIdList) {
+	public List<Customer> deleteAll(@RequestHeader("token") String token, @RequestParam("customerIdList") List<Integer> customerIdList) {
 		List<Customer> customerList = (List<Customer>) customerRepository.findAllById(customerIdList);
 		customerRepository.deleteAll(customerList);
 		return customerList;
 	}
 
 	@GetMapping("/{customerId}")
-	public Customer getCustomer(@PathVariable("customerId") int customerId) {
+	public Customer getCustomer(@RequestHeader("token") String token, @PathVariable("customerId") int customerId) {
 		return customerRepository.findById(customerId).get();
 	}
 
 	@PutMapping("/{customerId}")
-	public Customer updateCustomer(@PathVariable("customerId") int customerId, @RequestBody Customer customer) {
+	public Customer updateCustomer(@RequestHeader("token") String token, @PathVariable("customerId") int customerId, @RequestBody Customer customer) {
 		if (customerId != customer.getCustomerId()) {
 			throw new RuntimeException("Id is not the same with the object id");
 		}
@@ -76,7 +79,7 @@ public class CustomerController {
 	}
 
 	@DeleteMapping("/{customerId}")
-	public Customer deleteCustomer(@PathVariable("customerId") int customerId) {
+	public Customer deleteCustomer(@RequestHeader("token") String token, @PathVariable("customerId") int customerId) {
 		Customer customer = customerRepository.findById(customerId).get();
 		customerRepository.delete(customer);
 		return customer;
