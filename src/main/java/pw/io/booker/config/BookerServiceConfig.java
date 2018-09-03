@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import pw.io.booker.repo.AuthenticationRepository;
 import pw.io.booker.repo.CustomerRepository;
+import pw.io.booker.service.AuthenticationAspect;
 import pw.io.booker.service.AuthenticationService;
 import pw.io.booker.service.CustomerService;
 
@@ -22,5 +23,11 @@ public class BookerServiceConfig {
 	public CustomerService customerService(CustomerRepository customerRepository)
 	{
 		return new CustomerService(customerRepository);
+	}
+	
+	@Bean
+	public AuthenticationAspect authenticationAspect(AuthenticationService authenticationService)
+	{
+		return new AuthenticationAspect(authenticationService);
 	}
 }
